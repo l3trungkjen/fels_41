@@ -351,16 +351,14 @@ body {
   color: #FFF;
   font-family: arial;
   font-size: 18px;
-  font-style: italic;
+  #font-style: italic;
   font-weight: 400;
   margin: 10px 0 0;
   text-transform: uppercase; }
 
 .content div p {
-  color: #FFF;
   font-family: arial;
   font-size: 14px;
-  font-style: italic;
   line-height: 21px;
   margin: 0 0 20px;
   text-align: justify; }
@@ -803,3 +801,31 @@ table, tbody, th, tr {
 
 select.span12 {
   width: 100%; }
+
+.lear_result {
+  float: left;
+  margin: 15px 0 0 10px !important;
+  color: #000 !important;
+  font: 400 14px/20px "Lucida Grande", Arial, sans-serif !important; }
+
+li.button {
+  font: 14px/14px "Lucida Grande", Arial, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  margin: 0 !important;
+  text-transform: Capitalize; }
+
+li.button a {
+  display: block;
+  height: 20px;
+  width: 80px;
+  background: #9eb9c2;
+  border: 1px solid rgba(33, 68, 72, 0.59);
+  text-align: center;
+  background: linear-gradient(top, #34696f, #2f5f63);
+  border-radius: 8px;
+  padding-top: 3px;
+  text-decoration: none; }
+
+h3.answers {
+  font: 14px/25px "Lucida Grande", Arial, sans-serif !important; }
