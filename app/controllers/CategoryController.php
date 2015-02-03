@@ -5,7 +5,6 @@ class CategoryController extends \Phalcon\Mvc\Controller
 
     public function indexAction()
     {
-        // Categories::fetchAll();
         $categories = Categories::find();
         $currentPage = $this->request->getQuery('page', 'int', 1);
         $paginator = new \Phalcon\Paginator\Adapter\Model(
@@ -17,11 +16,20 @@ class CategoryController extends \Phalcon\Mvc\Controller
         );
         $this->view->categories = $paginator->getPaginate();
         $this->view->user_id = $this->session->get('user_id');
+        $this->view->user = Users::findFirst($this->session->get('user_id'));
         $this->view->sidebar = false;
     }
 
     public function newAction()
     {
+        if (!$this->session->has('user_id') && !$this->session->has('user_email')) {
+            return $this->dispatcher->forward(
+                [
+                    'controller' => 'index',
+                    'action' => 'index'
+                ]
+            );
+        }
         $this->view->sidebar = false;
     }
 
@@ -45,6 +53,14 @@ class CategoryController extends \Phalcon\Mvc\Controller
 
     public function editAction($id)
     {
+        if (!$this->session->has('user_id') && !$this->session->has('user_email')) {
+            return $this->dispatcher->forward(
+                [
+                    'controller' => 'index',
+                    'action' => 'index'
+                ]
+            );
+        }
         if (!isset($id)) {
             return $this->dispatcher->forward(
                 [
@@ -90,6 +106,14 @@ class CategoryController extends \Phalcon\Mvc\Controller
 
     public function deleteAction($id)
     {
+        if (!$this->session->has('user_id') && !$this->session->has('user_email')) {
+            return $this->dispatcher->forward(
+                [
+                    'controller' => 'index',
+                    'action' => 'index'
+                ]
+            );
+        }
         if (!isset($id)) {
             return $this->dispatcher->forward(
                 [
@@ -136,6 +160,14 @@ class CategoryController extends \Phalcon\Mvc\Controller
 
     public function lessonAction($id = '')
     {
+        if (!$this->session->has('user_id') && !$this->session->has('user_email')) {
+            return $this->dispatcher->forward(
+                [
+                    'controller' => 'index',
+                    'action' => 'index'
+                ]
+            );
+        }
         if (!empty($id)) {
             $lessons = new Lessons();
             $lessons->user_id = $this->session->get('user_id');
@@ -158,7 +190,7 @@ class CategoryController extends \Phalcon\Mvc\Controller
 
     public function lesson_saveAction()
     {
-        if (!empty($request = $this->request->getPost())) {
+        if (!empty($request = $this->request->getPost()) && isset($request['answer'])) {
             foreach ($request['answer'] as $key => $answer) {
                 $lesson_words = new LessonWords();
                 $lesson_words->lesson_id = $request['lesson_id'];
@@ -180,10 +212,24 @@ class CategoryController extends \Phalcon\Mvc\Controller
             return $this->dispatcher->forward(
                 [
                     'controller' => 'category',
+                    'action' => 'lesson_result',
+                    'params' => [$request['lesson_id']]
+                ]
+            );
+        } else {
+            return $this->dispatcher->forward(
+                [
+                    'controller' => 'category',
                     'action' => 'index',
                 ]
             );
         }
+    }
+
+    public function lesson_resultAction($id)
+    {
+        $this->view->words = Lessons::fetchByCategoryWords($id);
+        $this->view->sidebar = false;
     }
 }
 

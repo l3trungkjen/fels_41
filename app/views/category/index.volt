@@ -1,7 +1,9 @@
 {% extends 'layouts/index.volt' %}
 {% block content %}
     <div class="article" style="width: 100%">
-        <span class="float_right">{{ link_to("#", "Categories") }}</span>
+        {% if permission(user_id) %}
+            <span class="float_right">{{ link_to("category/view", "Categories") }}</span>
+        {% endif %}
     </div>
     {{ get_content() }}
     {% for category in categories.items %}

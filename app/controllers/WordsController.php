@@ -11,6 +11,14 @@ class WordsController extends \Phalcon\Mvc\Controller
 
     public function newAction()
     {
+        if (!$this->session->has('user_id') && !$this->session->has('user_email')) {
+            return $this->dispatcher->forward(
+                [
+                    'controller' => 'index',
+                    'action' => 'index'
+                ]
+            );
+        }
         $categories = Categories::find(
             [
                 'status=1'
@@ -50,6 +58,14 @@ class WordsController extends \Phalcon\Mvc\Controller
 
     public function editAction($id)
     {
+        if (!$this->session->has('user_id') && !$this->session->has('user_email')) {
+            return $this->dispatcher->forward(
+                [
+                    'controller' => 'index',
+                    'action' => 'index'
+                ]
+            );
+        }
         if (!isset($id)) {
             return $this->dispatcher->forward(
                 [
@@ -115,6 +131,14 @@ class WordsController extends \Phalcon\Mvc\Controller
 
     public function deleteAction($id)
     {
+        if (!$this->session->has('user_id') && !$this->session->has('user_email')) {
+            return $this->dispatcher->forward(
+                [
+                    'controller' => 'index',
+                    'action' => 'index'
+                ]
+            );
+        }
         if (!isset($id)) {
             return $this->dispatcher->forward(
                 [
@@ -155,6 +179,7 @@ class WordsController extends \Phalcon\Mvc\Controller
                 'page' => $currentPage
             ]
         );
+        $this->view->user_id = $this->session->get('user_id');
         $this->view->words = $paginator->getPaginate();
         $this->view->sidebar = false;
     }

@@ -4,41 +4,29 @@
     <span class="float_right">{{ link_to("#", "Lessons") }}</span>
 </div>
 <div class="blog">
-    <div class="date">
-        <span>08-10</span>
-        <span>2011</span>
-    </div>
     <div>
-        <h2>Newest applications</h2>
+        <h2>Activities</h2>
         <div>
             border
         </div>
     </div>
     <ul>
-        <li>
-            <div>
+        {% for lesson in lessons.items %}
+            <li>
                 <div>
-                    {{ image("img/ring-a-posers.jpg", "alt":"") }}
+                    <div>
+                        {% if lesson.avatar != '' %}
+                            {{ image(lesson.avatar, "alt":"", "class": "icons") }}
+                        {% else %}
+                            {{ image("img/no_image_icon.gif", "alt":"", "class": "icons") }}
+                        {% endif %}
+                    </div>
+                    <div>
+                        <h3>{{ lesson.category_name }} - ( {{ convertDate(lesson.created) }} )</h3>
+                    </div>
                 </div>
-                <div>
-                    <h3>Ring-a-posers</h3>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div>
-                <div>
-                    {{ image("img/ring-a-posers.jpg", "alt":"") }}
-                </div>
-                <div>
-                    <h3>Ring-a-posers</h3>
-                </div>
-            </div>
-        </li>
+            </li>
+        {% endfor %}
     </ul>
-    <div class="section">
-        {{ link_to("#", "back to top") }}
-        {{ link_to("#", "Show All") }}
-    </div>
 </div>
 {% endblock %}

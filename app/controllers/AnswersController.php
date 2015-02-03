@@ -11,6 +11,14 @@ class AnswersController extends \Phalcon\Mvc\Controller
 
     public function newAction()
     {
+        if (!$this->session->has('user_id') && !$this->session->has('user_email')) {
+            return $this->dispatcher->forward(
+                [
+                    'controller' => 'index',
+                    'action' => 'index'
+                ]
+            );
+        }
         $words = Words::find();
         $select = new Select('word_id');
         $arr_word[''] = 'Please, Choose one word...';
@@ -51,6 +59,14 @@ class AnswersController extends \Phalcon\Mvc\Controller
 
     public function editAction($id)
     {
+        if (!$this->session->has('user_id') && !$this->session->has('user_email')) {
+            return $this->dispatcher->forward(
+                [
+                    'controller' => 'index',
+                    'action' => 'index'
+                ]
+            );
+        }
         if (!isset($id)) {
             return $this->dispatcher->forward(
                 [
@@ -116,6 +132,14 @@ class AnswersController extends \Phalcon\Mvc\Controller
 
     public function deleteAction($id)
     {
+        if (!$this->session->has('user_id') && !$this->session->has('user_email')) {
+            return $this->dispatcher->forward(
+                [
+                    'controller' => 'index',
+                    'action' => 'index'
+                ]
+            );
+        }
         if (!isset($id)) {
             return $this->dispatcher->forward(
                 [
@@ -146,6 +170,14 @@ class AnswersController extends \Phalcon\Mvc\Controller
 
     public function viewAction()
     {
+        if (!$this->session->has('user_id') && !$this->session->has('user_email')) {
+            return $this->dispatcher->forward(
+                [
+                    'controller' => 'index',
+                    'action' => 'index'
+                ]
+            );
+        }
         $currentPage = $this->request->getQuery('page', 'int', 1);
         $paginator = new \Phalcon\Paginator\Adapter\Model(
             [

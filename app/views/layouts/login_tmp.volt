@@ -4,6 +4,7 @@
     <title>Login Form</title>
     {% block css %}
         {{ stylesheet_link("css/login.css") }}
+        {{ stylesheet_link("css/avatar.css") }}
     {% endblock %}
 </head>
 <body>

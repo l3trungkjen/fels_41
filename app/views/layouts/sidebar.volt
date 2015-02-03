@@ -1,10 +1,10 @@
 <div class="sidebar">
     <div id="logo">
-        <a href="#">
+        <a href="users/avatar">
             {% if user.avatar != NULL %}
-                {{ image(user.avatar) }}
+                {{ image(user.avatar, 'class': 'avatar') }}
             {% else %}
-                {{ image("img/no_image_icon.gif") }}
+                {{ image('img/no_image_icon.gif', 'class': 'avatar') }}
             {% endif %}
         </a>
     </div>
